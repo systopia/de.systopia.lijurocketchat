@@ -20,7 +20,10 @@
   <compatibility>
     <ver>5.0</ver>
   </compatibility>
-  <comments>This is a new, undeveloped module</comments>
+  <comments>This needs de.systopia.rocketchatapi (https://github.com/systopia/de.systopia.rocketchatapi)</comments>
+  <requires>
+    <ext>de.systopia.rocketchatapi</ext>
+  </requires>
   <civix>
     <namespace>CRM/Lijurocketchat</namespace>
   </civix>
