@@ -30,6 +30,6 @@ function _civicrm_api3_rocketchat_userlookup_spec(&$spec) {
  */
 function civicrm_api3_rocketchat_userlookup($params) {
   $test = new CRM_Lijurocketchat_Utils();
-  $res = $test->whoami();
-  return civicrm_api3_create_success('HOORAY. The End.');
+  $res = $test->get_rcId($params['email']);
+  return civicrm_api3_create_success('HOORAY. The End.' . json_encode($res));
 }
