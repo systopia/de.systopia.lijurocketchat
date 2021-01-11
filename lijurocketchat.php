@@ -3,6 +3,8 @@
 require_once 'lijurocketchat.civix.php';
 use CRM_Lijurocketchat_ExtensionUtil as E;
 
+use \Symfony\Component\DependencyInjection\ContainerBuilder;
+
 /**
  * Implements hook_civicrm_config().
  *
@@ -11,6 +13,19 @@ use CRM_Lijurocketchat_ExtensionUtil as E;
 function lijurocketchat_civicrm_config(&$config) {
   _lijurocketchat_civix_civicrm_config($config);
 }
+
+/**
+ * Implements hook_civicrm_container()
+ *
+ * @link https://docs.civicrm.org/dev/en/latest/hooks/hook_civicrm_container/
+ */
+function lijurocketchat_civicrm_container(ContainerBuilder $container) {
+  echo "hello there";
+  if (class_exists('\Civi\Lijurocketchat\ContainerSpecs')) {
+    $container->addCompilerPass(new \Civi\Lijurocketchat\ContainerSpecs());
+  }
+}
+
 
 /**
  * Implements hook_civicrm_xmlMenu().
