@@ -54,11 +54,11 @@ function civicrm_api3_rocketchat_createuser($params) {
       'active'    => TRUE,
     ];
     // TODO debug first before creating user here
-    $response = $test->create_rcUser($t);
-    return civicrm_api3_create_success('Hooray. Created user? ' . json_encode($response));
+    $res = $test->create_rcUser($t);
+    return civicrm_api3_create_success(["rocketchat_id" => $res]);
 
   } catch (Exception $e) {
-    return civicrm_api3_create_success('Error: ' . $e->getMessage());
+    return civicrm_api3_create_error($e->getMessage());
   }
 
 }

@@ -24,6 +24,8 @@ class CRM_Lijurocketchat_Utils {
 
   private $rocketchat_connector;
 
+  private $new_rocketchat_user = [];
+
   private $rc_user_attrib = [
     'email',
     'name',
@@ -107,7 +109,13 @@ class CRM_Lijurocketchat_Utils {
    */
   public function create_rcUser($user) {
     $this->verify_user_parameters($user);
-    return $this->rocketchat_connector->execute_post('users.create', json_encode($user));
+    $new_user = $this->rocketchat_connector->execute_post('users.create', json_encode($user));
+    $users = $response->body->users;
+    foreach ($users as $user) {
+      $new_rc_id = $user->_id;
+    }
+    $this->new_rocketchat_user[$new_rc_id] = $new_user;
+    return $new_rc_id;
   }
 
 
