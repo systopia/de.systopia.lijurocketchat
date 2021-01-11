@@ -23,7 +23,11 @@
   <comments>This needs de.systopia.rocketchatapi (https://github.com/systopia/de.systopia.rocketchatapi)</comments>
   <requires>
     <ext>de.systopia.rocketchatapi</ext>
+    <ext>actionprovider</ext>
   </requires>
+  <classloader>
+    <psr4 prefix="Civi\" path="Civi" />
+  </classloader>
   <civix>
     <namespace>CRM/Lijurocketchat</namespace>
   </civix>
