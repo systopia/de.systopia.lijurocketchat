@@ -46,15 +46,9 @@ function civicrm_api3_rocketchat_createuser($params) {
         $user[$name] = $value;
       }
     }
-    $t = [
-      'email'     => 'mailtest@systopia.de',
-      'name'      => 'SYSTOPIA Mailtester',
-      'password'  => '1234567890',
-      'username'  => 'systopia_test',
-      'active'    => TRUE,
-    ];
+
     // TODO debug first before creating user here
-    $res = $test->create_rcUser($t);
+    $res = $test->create_rcUser($user);
     return civicrm_api3_create_success(["rocketchat_id" => $res]);
 
   } catch (Exception $e) {
