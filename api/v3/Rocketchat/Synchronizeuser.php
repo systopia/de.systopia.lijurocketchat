@@ -23,5 +23,29 @@ function _civicrm_api3_rocketchat_synchronizeuser_spec(&$spec) {
  * @throws API_Exception
  */
 function civicrm_api3_rocketchat_synchronizeuser($params) {
+  try{
+    $contact_id = $params['contact_id'];
+    $rocketchat_id = '';
+    // get user
+    $contact = civicrm_api3("Contact", "getsingle", [
+      'id' => $contact_id,
+    ]);
 
+    $rocketchat_names = \CRM_Lijurocketchat_Utils::create_rocketchat_names($contact);
+    $rocketchat_params = [
+      'name' => $rocketchat_names['name'],
+      'username' => $rocketchat_names['username'],
+      'active' => TRUE,
+//      'sendwelcomemail' => TRUE,  // TODO
+      'password' => \CRM_Lijurocketchat_Utils::generate_random_string(),
+      'email' => \CRM_Lijurocketchat_Utils::get_primary_email($contact_id),
+    ];
+
+    $create_rocketchat_user_result = civicrm_api3('Rocketchat', 'createuser', $rocketchat_params);
+
+    \CRM_Lijurocketchat_Utils::add_rc_id_to_contact($contact_id, $create_rocketchat_user_result['rocketchat_id']);
+    return civicrm_api3_create_success(["rocketchat_id" => $rocketchat_id]);
+  } catch(Exception $e) {
+    return civicrm_api3_create_error($e->getMessage());
+  }
 }
