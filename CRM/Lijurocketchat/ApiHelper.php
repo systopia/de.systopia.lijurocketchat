@@ -18,7 +18,7 @@ use Httpful\Exception\ConnectionErrorException;
 use Httpful\Response;
 
 /**
- * Class CRM_Lijurocketchat_Utils
+ * Class CRM_Lijurocketchat_ApiHelper
  */
 class CRM_Lijurocketchat_ApiHelper {
 

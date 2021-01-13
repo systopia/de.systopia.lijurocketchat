@@ -132,7 +132,7 @@ class LinkRocketchat extends AbstractAction {
     $params = [
       'name' => $name,
       'email' => $parameters->getParameter('email'),
-      'password' => $this->generate_string(),
+      'password' => \CRM_Lijurocketchat_Utils::generate_random_string(),
       'username' => $username,
       'active' => TRUE
     ];
@@ -152,25 +152,6 @@ class LinkRocketchat extends AbstractAction {
       'identifier' => $rocketchat_id,
       'identifier_type' => "rocketchat",
     ]);
-  }
-
-  /**
-   * Generates a random alphanumeric string for a default password
-   * Values [a-zA-Z0-9]
-   *
-   * @param int $strength
-   * @return string
-   */
-  protected function generate_string($strength = 16) {
-    $permitted_chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-    $input_length = strlen($permitted_chars);
-    $random_string = '';
-    for($i = 0; $i < $strength; $i++) {
-        $random_character = $permitted_chars[mt_rand(0, $input_length - 1)];
-        $random_string .= $random_character;
-    }
-
-    return $random_string;
   }
 
 }
