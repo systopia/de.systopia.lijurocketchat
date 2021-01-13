@@ -107,8 +107,6 @@ class LinkRocketchat extends AbstractAction {
       'email' => $parameters->getParameter('email')
     ]);
 
-    echo "DEBUG: " . \GuzzleHttp\json_encode($rocketchat_user_lookup) . "\n";
-
     if ($rocketchat_user_lookup['is_error'] == '1') {
       \Civi::log()->debug("Internal Rocket chat Error: " . $rocketchat_user_lookup['error_message']);
       throw new Exception("Internal Rocket chat Error: " . $rocketchat_user_lookup['error_message']);
