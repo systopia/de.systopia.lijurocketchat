@@ -20,7 +20,6 @@ function lijurocketchat_civicrm_config(&$config) {
  * @link https://docs.civicrm.org/dev/en/latest/hooks/hook_civicrm_container/
  */
 function lijurocketchat_civicrm_container(ContainerBuilder $container) {
-  echo "hello there";
   if (class_exists('\Civi\Lijurocketchat\ContainerSpecs')) {
     $container->addCompilerPass(new \Civi\Lijurocketchat\ContainerSpecs());
   }
@@ -43,6 +42,20 @@ function lijurocketchat_civicrm_xmlMenu(&$files) {
  */
 function lijurocketchat_civicrm_install() {
   _lijurocketchat_civix_civicrm_install();
+  // check if rocketchat ID-type already exists
+  $result = civicrm_api3('OptionValue', 'get', [
+    'sequential' => 1,
+    'option_group_id' => "contact_id_history_type",
+    'value' => "rocketchat",
+  ]);
+  // if not ID exists, create it
+  if ($result['count'] != '1') {
+    $result = civicrm_api3('OptionValue', 'create', [
+      'option_group_id' => "contact_id_history_type",
+      'label' => "rocketchat",
+      'value' => "rocketchat",
+    ]);
+  }
 }
 
 /**
