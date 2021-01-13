@@ -109,13 +109,13 @@ class CRM_Lijurocketchat_ApiHelper {
    */
   public function create_rcUser($user) {
     $this->verify_user_parameters($user);
-    $new_user = $this->rocketchat_connector->execute_post('users.create', json_encode($user));
-    $users = $response->body->users;
-    foreach ($users as $user) {
-      $new_rc_id = $user->_id;
+    $response = $this->rocketchat_connector->execute_post('users.create', json_encode($user));
+    // check for errors
+    if ($response->body->success == false) {
+      throw new Exception('Rocket Chat Create user Error: ' . $response->body->error);
     }
-    $this->new_rocketchat_user[$new_rc_id] = $new_user;
-    return $new_rc_id;
+    $this->new_rocketchat_user[$response->body->user->_id] = $response;
+    return $response->body->user->_id;
   }
 
 
