@@ -37,6 +37,7 @@ class CRM_Lijurocketchat_Utils {
       $random_character = $permitted_chars[mt_rand(0, $input_length - 1)];
       $random_string .= $random_character;
     }
+    return $random_string;
   }
 
   /**
