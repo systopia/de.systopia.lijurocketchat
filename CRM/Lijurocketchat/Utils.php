@@ -39,4 +39,51 @@ class CRM_Lijurocketchat_Utils {
     }
   }
 
+  /**
+   * @param $contact_id
+   * @return mixed
+   * @throws CiviCRM_API3_Exception
+   */
+  public static function get_primary_email($contact_id) {
+    $result = civicrm_api3('Email', 'get', [
+      'sequential' => 1,
+      'contact_id' => $contact_id,
+    ]);
+    foreach ($result['values'] as $email) {
+      if ($email['is_primary'] == '1') {
+        return $email['email'];
+      }
+    }
+  }
+
+  /**
+   * @param $contact
+   * @return array
+   */
+  public static function create_rocketchat_names($contact){
+    $result = [];
+    if (empty($contact['first_name']) && empty($contact['last_name'])) {
+      $result['name'] = $contact['display_name'];
+      $result['username'] = $contact['display_name'];
+    } else {
+      $result['name'] = $contact['first_name'] . " " . $contact['last_name'];
+      $result['username'] = $contact['first_name'] . "_" . $contact['last_name'];
+    }
+    return $result;
+  }
+
+
+  /**
+   * @param $contact_id
+   * @param $rocketchat_id
+   * @throws \CiviCRM_API3_Exception
+   */
+  public static function add_rc_id_to_contact($contact_id, $rocketchat_id) {
+    $result = civicrm_api3('Contact', 'addidentity', [
+      'contact_id' => $contact_id,
+      'identifier' => $rocketchat_id,
+      'identifier_type' => "rocketchat",
+    ]);
+  }
+
 }

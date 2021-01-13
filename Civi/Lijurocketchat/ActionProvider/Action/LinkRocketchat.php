@@ -85,7 +85,7 @@ class LinkRocketchat extends AbstractAction {
         // no rocketchat account found for that email
         $rocketchat_id = $this->create_rc_user($parameters);
       }
-      $this->add_rc_id_to_contact($parameters, $rocketchat_id);
+      \CRM_Lijurocketchat_Utils::add_rc_id_to_contact($parameters->getParameter('contact_id'), $rocketchat_id);
       // set output paramters
       $output->setParameter('rocketchat_id', $rocketchat_id);
       $output->setParameter('error', '');
@@ -122,36 +122,18 @@ class LinkRocketchat extends AbstractAction {
 
     $contact = civicrm_api3("Contact", "getsingle", ['id' => $parameters->getParameter('contact_id')]);
 
-    if (empty($contact['first_name']) && empty($contact['last_name'])) {
-      $name = $contact['display_name'];
-      $username = $contact['display_name'];
-    } else {
-      $name = $contact['first_name'] . " " . $contact['last_name'];
-      $username = $contact['first_name'] . "_" . $contact['last_name'];
-    }
+    $rocketchat_names = \CRM_Lijurocketchat_Utils::create_rocketchat_names($contact);
     $params = [
-      'name' => $name,
+      'name' => $rocketchat_names['name'],
       'email' => $parameters->getParameter('email'),
       'password' => \CRM_Lijurocketchat_Utils::generate_random_string(),
-      'username' => $username,
+      'username' => $rocketchat_names['username'],
       'active' => TRUE
     ];
     $create_rocketchat_user_result = civicrm_api3('Rocketchat', 'createuser', $params);
     return $create_rocketchat_user_result['rocketchat_id'];
   }
 
-  /**
-   * @param ParameterBagInterface $parameters
-   * @param $rocketchat_id
-   * @throws \CiviCRM_API3_Exception
-   */
-  protected function add_rc_id_to_contact(ParameterBagInterface $parameters, $rocketchat_id) {
-    $contact_id = $parameters->getParameter('contact_id');
-    $result = civicrm_api3('Contact', 'addidentity', [
-      'contact_id' => $contact_id,
-      'identifier' => $rocketchat_id,
-      'identifier_type' => "rocketchat",
-    ]);
-  }
+
 
 }
