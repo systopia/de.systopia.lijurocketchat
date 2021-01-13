@@ -20,7 +20,7 @@ use Httpful\Response;
 /**
  * Class CRM_Lijurocketchat_Utils
  */
-class CRM_Lijurocketchat_Utils {
+class CRM_Lijurocketchat_ApiHelper {
 
   private $rocketchat_connector;
 

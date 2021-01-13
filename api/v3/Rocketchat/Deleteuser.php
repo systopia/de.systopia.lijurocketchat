@@ -24,7 +24,7 @@ function _civicrm_api3_rocketchat_deleteuser_spec(&$spec) {
  */
 function civicrm_api3_rocketchat_deleteuser($params) {
     try{
-    $test = new CRM_Lijurocketchat_Utils();
+    $test = new CRM_Lijurocketchat_ApiHelper();
     $rc_id = 'hifbNL5jkyDmPfRGG';
 
     $response = $test->delete_rcUser($rc_id);

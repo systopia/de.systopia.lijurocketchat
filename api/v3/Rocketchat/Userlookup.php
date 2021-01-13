@@ -30,7 +30,7 @@ function _civicrm_api3_rocketchat_userlookup_spec(&$spec) {
  */
 function civicrm_api3_rocketchat_userlookup($params) {
   try {
-    $liju_utils = new CRM_Lijurocketchat_Utils();
+    $liju_utils = new CRM_Lijurocketchat_ApiHelper();
     $res = $liju_utils->get_rcId($params['email']);
     return civicrm_api3_create_success(["rocketchat_id" => $res]);
   } catch (Exception $e) {

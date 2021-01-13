@@ -39,7 +39,7 @@ function _civicrm_api3_rocketchat_createuser_spec(&$spec) {
  */
 function civicrm_api3_rocketchat_createuser($params) {
   try{
-    $test = new CRM_Lijurocketchat_Utils();
+    $test = new CRM_Lijurocketchat_ApiHelper();
     $user = [];
     foreach ($params as $name => $value) {
       if ($test->check_parameter($name)) {
