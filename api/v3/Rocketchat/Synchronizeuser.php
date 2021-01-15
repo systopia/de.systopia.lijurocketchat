@@ -42,7 +42,7 @@ function civicrm_api3_rocketchat_synchronizeuser($params) {
     ];
 
     $create_rocketchat_user_result = civicrm_api3('Rocketchat', 'createuser', $rocketchat_params);
-     = $create_rocketchat_user_result['values']['rocketchat_id'];
+    $rocketchat_id = $create_rocketchat_user_result['values']['rocketchat_id'];
 
     \CRM_Lijurocketchat_Utils::add_rc_id_to_contact($contact_id, $rocketchat_id);
     return civicrm_api3_create_success(["rocketchat_id" => $rocketchat_id]);
